@@ -534,19 +534,15 @@ Computer Society, IEEE, IEEEtran, journal, \LaTeX, paper, template.
 % 
 % Here we have the typical use of a "T" for an initial drop letter
 % and "HIS" in caps to complete the first word.
-\IEEEPARstart{O}{ne} of the main goals of artificial intelligence (AI) is to produce fully autonomous agents that can learn from experience the optimal behaviour for their environments. Reinforcement Learning (RL) provides a framework for such experience-driven learning with the advent of deep learning enabling RL to tackle problems previously intractable.   The Deep Q-Learning (DQN) algorithm was introduced by DeepMind to beat previous state-of-the-art agents at playing Atari 2600. This ignited the field of “Deep Reinforcement Learning”; from then on, growth of the field has been exponential.
+\IEEEPARstart{O}{ne} of the main goals of artificial intelligence (AI) is to produce fully autonomous agents that can learn from experience the optimal behaviour for their environments. Reinforcement Learning (RL) provides a framework for such experience-driven learning and the advent of deep learning has enabled RL to tackle problems previously intractable, opening the door to amazing possibilites.   The Deep Q-Learning (DQN) algorithm \cite{Mnih:DQN} was introduced by DeepMind to beat previous state-of-the-art agents at playing Atari 2600. This ignited the field of “Deep Reinforcement Learning”. Since then, growth of the field has been exponential.
 \\
-Deep RL has achieved great success “a decade ahead of its time”[REF DEEPMIND HOMEPAGE] as AlphaGo [REF] defeated Lee Sedol the 18-time Go world champion with a 4-1 victory in Seoul, South Korea. It was thought impossible due to the vast game-tree complexity of Go \begin{math}10^{360}\end{math} (chess is \begin{math}10^{123}\end{math} for comparison). 
+Deep RL has achieved great success ``a decade ahead of its time'' \cite{WEBSITE:DeepMind} as AlphaGo \cite{silver2016mastering} defeated Lee Sedol the 18-time Go world champion with a 4-1 victory in Seoul, South Korea. It was thought impossible due to the vast game-tree complexity of Go \begin{math}10^{360}\end{math} (chess is \begin{math}10^{123}\end{math} for comparison). 
+The same authors then developed AlphaZero \cite{Silver:AlphaZero} that beat each world-champion computer programs in the games of Chess, Shogi and Go.
+Pluribus achieved superhuman performance at 6-player no-limit Texas Hold’em when competing against elite human players in a series of matches \cite{brown2019superhuman}. Two of the players being past 1st place winners of the poker world series. This represents a massive milestone for AI as the algorithm deals with a partially observable six-agent environment. Many real-world strategic interactions happen in similar environments.
+OpenAI used RL to train a robotic hand to solve a Rubik’s cube then transferring what was learnt in simulation to be done on physical actuators in the real world with amazing results \cite{akkaya2019solving}. 
+AlphaStar \cite{vinyals2019grandmaster} achieved grandmaster level in StarCraft II, reaching top of the league and beating 99.8\% of officially ranked human players.
 \\
-The same authors then developed AlphaZero [REF] that beat each world-champion computer programs in the games of Chess, Shogi and Go.
-\\
-Pluribus achieved superhuman performance at 6-player no-limit Texas Hold’em when competing against elite human players in a series of matches [REF]. Two of the players being past 1st place winners of the poker world series. This represents a massive milestone for AI as the algorithm deals with a partially observable six-agent environment. Many real-world strategic interactions happen in similar environments.
-\\
-OpenAI used RL to train a robotic hand to solve a Rubik’s cube then transferring what was learnt in simulation to be done on physical actuators in the real world with amazing results [REF]. 
-\\
-AlphaStar [REF] achieved grandmaster level in StarCraft II, reaching top of the league and beating 99.8\% of officially ranked human players.
-\\
-Video games present an interesting challenge and testbed for Deep RL but they are not the end goal. The vision behind Deep RL is of creating systems that learn and adapt in real world domains.
+Games like these present an interesting challenge and testbed for Deep RL but they are only the beginning. The vision behind Deep RL is of creating systems that learn and adapt in real world domains.
 
 % You must have at least 2 lines in the paragraph with the drop letter
 % (should never be an issue)
@@ -654,7 +650,7 @@ Video games present an interesting challenge and testbed for Deep RL but they ar
 
 \section{Background}
 \subsection{Reinforcement Learning}
-Reinforcement learning (RL) is an iterative trail \& error, reward \& punishment process over time. At each time step the RL agent acts upon its environment by taking an action. The environment then provides feedback to the agent in the form of an immediate reward. The goal of reinforcement learning is to train an agent through experience to act upon its environment such that the environment yields the most reward to the agent.
+RL is an iterative trail \& error, reward \& punishment process over time. At each time step the RL agent acts upon its environment by taking an action. The environment then provides feedback to the agent in the form of an immediate reward. The goal of reinforcement learning is to train an agent through experience to act upon its environment such that the environment yields the most reward to the agent.
 \begin{figure}[!h]
 \centering
 \includegraphics[width=2.5in]{rl_process}
@@ -662,10 +658,10 @@ Reinforcement learning (RL) is an iterative trail \& error, reward \& punishment
 \label{rl_process_loop}
 \end{figure}
 
-RL differs to Supervised Learning because the targets for learning change over time as the agent learns from interactions with the environment. This is different from supervised learning where the targets for learning are fixed from the beginning.
+RL differs to Supervised Learning \cite{LeCun:DeepLearning} because the targets for learning change over time as the agent learns from interactions with the environment. This is different from supervised learning where the targets for learning are fixed from the beginning.
 
 \subsubsection{Markov Decision Process}
-Reinforcement Learning is traditionally modelled as a Markov Decision Process (MDP) [REF]. A MDP is a sequential decision problem for a fully observable, stochastic environment with a Markovian transition model and additive rewards. It is defined as a set of states, actions, a transition model, a reward function, and an initial state distribution \begin{math}\langle S,A,P(s’|s,a),R(s),\rho_0 \rangle\end{math}. 
+Reinforcement Learning is traditionally modelled as a Markov Decision Process (MDP) \cite{BOOK:AI}. A MDP is a sequential decision problem for a fully observable, stochastic environment with a Markovian transition model and additive rewards. It is defined as a set of states, actions, a transition model, a reward function, and an initial state distribution \begin{math}\langle S,A,P(s’|s,a),R(s),\rho_0 \rangle\end{math}. 
 
 \begin{description}[\IEEEsetlabelwidth{$P(s'|s,a)$}\IEEEusemathlabelsep]
 \item[$S$] States are the set of environment states. The current state being the state of the environment the agent is currently experiencing.
@@ -710,7 +706,7 @@ V(s) = R(s) + \gamma\max_{a\in A(s)}\sum\limits_{s'} P(s'|,s,a)V(s')
 \end{equation}
 Traditional solutions to an MDP would perform value-iteration or policy-iteration. Value-iteration uses a dynamic programming approach in the form of Bellman Updates to converge on the actual values of each state. Policy-iteration repeatedly evaluates and improves a policy. The evaluation calculates the value of each state according to the policy. The improvement calculates a new policy by considering a one-step reward look-ahead that updates each of the state values previously evaluated. Iteration terminates when policy improvement yields no change in state values.
 \subsection{Deep Learning}
-Deep Reinforcement learning is the application of Deep Learning to the Reinforcement Learning problem. Deep learning is a subfield of Machine Learning (ML) that is concerned with the use large artificial neural networks \cite{IEEEhowto:lecun}. These deep networks often have many intermediate layers and thousands if not millions of parameters. Application of these networks allows RL to scale to problems that were previously intractable. Settings that have high-dimensional state and action spaces, domains where the input is visually rich or where input is required to be encoded over a long history.
+Deep Reinforcement learning is the application of Deep Learning to the Reinforcement Learning problem. Deep learning is a subfield of Machine Learning (ML) that is concerned with the use large artificial neural networks \cite{LeCun:DeepLearning}. These deep networks often have many intermediate layers and thousands if not millions of parameters. Application of these networks allows RL to scale to problems with high-dimensional state and action spaces that were previously intractable.
 \\
 Deep neural networks are used to approximate the solutions to an MDP therefore they approximate either the policy function or the value function. Policy networks typically output as a softmax over actions whereas value networks output a numerical value. There are three options for the value function a deep neural network can approximate.
 \begin{itemize}
@@ -730,15 +726,69 @@ A \textbf{convolutional layer} contains a set of filters (also referred to as ne
 
 \textbf{Fully-Connected Layers} are multi-layer perceptions and perform similar functions found in shallow neural networks. It is the job of the fully-connected layers to classify the output of the preceding convolutional and pooling layers.
 \subsubsection{Recurrent Networks}
-Recurrent neural networks are also used in deep RL and often trailed as alternative architectures. The Deep Recurrent Q-Network (DRQN) algorithm uses a recurrent architecture with DQN to play a partially observable version of Atari. 
-\\\\
-Recurrent networks are neural networks with memory that specialise in processing sequential data. Output of hidden layers are stored in memory neurons. The memory neurons are passed back to the hidden layer as input for the next item of the input sequence that is feed to the recurrent network.
+Recurrent neural networks are used in deep RL and often trailed as alternative architectures. The Deep Recurrent Q-Network (DRQN) algorithm uses a recurrent architecture with DQN to play a partially observable version of Atari \cite{Haus:DRQN}. 
+\\
+Recurrent networks are neural networks with memory that specialise in processing sequential data. Output of hidden layers are stored in memory neurons. The memory neurons are passed back to the hidden layer along with the next input from the sequence as it is feed to the network.
+\\
+The two most common types of recurrent network are Gated Recurrent Unit (GRU) \cite{chung2014empirical} and Long Short-Term Memory (LSTM) \cite{chung2014empirical}. Recurrence can be used in conjunction with CNNs as a single hybrid architecture.
 
 \section{Taxonomy}
+\subsection{Model-Based \& Model-Free}
+\subsubsection{Model Given \& Model Learned}
+\subsection{On-Policy \& Off-Policy}
+Off-policy RL is when the behavioural policy is different from the target policy. On-policy RL is when the behavioural policy is that same as the target policy. The behavioural policy is the policy the agent uses when acting on the environment to generate new experiences. The target policy is the policy that is updated when learning from past experiences.
+\subsection{Value-Based or Policy-Based}
+If the agent is trying to solve the problem by learning an optimal policy function the algorithm is policy-based. If the agent is trying to learn an optimal value function the algorithm is value-based. Actor-critic methods are hybrid algorithms where an agent is trying to learn both the policy and value functions. The actor (policy) acts in the environment and the critic (value) evaluates the actors actions and dictates improvements.
 
 \section{Key Algorithms}
-DQN, A3C, ...etc.
 \subsection{Deep Q-Learning with Experience Replay}
+Deep Q-Learning with Experience Replay (DQN) \cite{Mnih:DQN} substantially launched the field of Deep RL. DQN uses a RL framework and deep learning to play Atari 2600 games implemented in the Arcade Learning Environment \cite{bellemare2013arcade}. Instead of using traditional value iteration (\ref{qvalue_iteration}) algorithms the authors used a CNN to approximate the optimal state-action value function Q*(s,a) (\ref{qvalue_approximation}). The parameters of the network are represented by \begin{math}\theta\end{math}.
+
+\begin{equation}
+\label{qvalue_iteration}
+Q^*(s,a) = \mathbf{E}_{s'\sim\varepsilon} [r + \gamma \max_{a'} Q^*(s',a')|s,a]
+\end{equation}
+
+\begin{equation}
+\label{qvalue_approximation}
+Q^*(s,a) \approx Q(s,a;\theta)
+\end{equation}
+
+The CNN takes in raw visual input of the Atari games as states and outputs a Q-value for each possible action. The agent then plays Atari by selecting actions according to the predictions of the network. The game state is inputted to the CNN as 4 stacked histories each grey-scaled, down sampled and cropped into an 84x84 region. Multiple histories are used because a state cannot be fully represented in a single frame, for example, direction and velocity of the ball in ‘Pong’ cannot be shown by a single frame.
+\\
+At each time step DQN stores experiences in a replay buffer to learn from later. This is significant because the batching and sampling of past experience enables stable training of the deep CNN. The network is trained by minimising a sequence of loss functions. Each function's target for learning \begin{math}y_i\end{math} comprises the next state's Q-value predicted by the previous iteration’s network and an immediate reward returned from the environment (\ref{target_func}). Stochastic Gradient Descent (SGD) is used when updating the weights of the network according to the loss (\ref{loss_func}).
+ 
+\begin{equation}
+\label{loss_func}
+L_i(\theta_i) = \mathbf{E}_{s,a\sim p(.)} [(y_i -  Q(s,a;\theta_i))^2]
+\end{equation}
+
+\begin{equation}
+\label{target_func}
+y_i = \mathbf{E}_{s'\sim\varepsilon} [r + \gamma \max_{a'} Q(s',a';\theta_{i-1})|s,a]
+\end{equation}
+
+The network is trained for 10 million frames with a replay memory of the 1 million most recent frames. During training an $\varepsilon$-greedy policy is used for action selection with greediness being annealed linearly from 1 to 0.1 over the first million frames. $\varepsilon$-greedy selection is a trade-off between exploration and exploitation selecting the highest Q-value action with probability \begin{math}1-\varepsilon\end{math} or an alternative action uniformly at random. In other words, the greater the value of $\varepsilon$ the more exploration and visa-versa.  
+
+\begin{figure}[!h]
+\centering
+\includegraphics[width=2.5in]{dqn_pseudo}
+\caption{Pseudocode for DQN.}
+\label{dqn_pseudo}
+\end{figure}
+
+Q-value increases over training showing deep networks can be stably trained to solve RL problems. The results against previous art and human players show DQN outperforms any traditional RL approach and even human scores on 3 of the 7 games tested.
+
+\begin{figure}[!h]
+\centering
+\includegraphics[width=\linewidth]{dqn_learning}
+\caption{State-Action value learning progress of DQN.}
+\label{dqn_learning}
+\end{figure}
+
+There have been many improvements and alterations to DQN since its publication. Deep Recurrent Q-Networks \cite{Haus:DRQN}, Double DQN \cite{van2016ddqn}, Prioritized DQN \cite{schaul2015prioritized}, Duelling DQN \cite{wang2015dueling}, Distributional DQN \cite{bellemare2017distributional} and Noisy DQN \cite{fortunato2017noisy} are a few examples.  Publications have successfully combined improvements to DQN. RAINBOW \cite{hessel2018rainbow} is an algorithm that integrates many of the previously mentioned DQN variants into a single hybrid algorithm resulting in better Atari performance. 
+\subsubsection{DQN is value-based, model-free and off-policy}
+This algorithm is a value-based algorithm because it attempts to learn the optimal state-action value function. It does not concern itself with learning the optimal policy, this would be role of a policy-based algorithm. DQN is model-free RL because it only predicts state-action values and does not learn an MDP model of the environment. DQN is off-policy RL because the behavioural policy is simply an $\varepsilon$-greedy selection. Off-policy RL is when the behavioural policy is different from the target policy. On-policy RL is when the behavioural policy is that same as the target policy. 
 \subsection{Ayncrhonous Advantage Actor-Critic}
 
 \section{State-of-the-art Work}
@@ -746,6 +796,9 @@ AlphaZero, MuZer ..etc.
 
 \section{Future Directions}
 Goals for the future...
+\subsection{Interpretability \& Explainable AI}
+Model Extraction.
+Model Visualisation.
 
 \section{Conclusion}
 We need a conclusion.
@@ -793,7 +846,7 @@ Appendix two text goes here.
 \fi
 
 
-The authors would like to thank Demis Hassabis and David Silver for being such inspirational lecturers. REMOVE THIS!
+The authors would like to thank David Silver for his fantastic, freely available, lecture series [REF] on Deep RL and OpenAI for their "Spinning Up in Deep RL" guide [REF] that presents a great introduction to the field and collation of key papers for researchers just starting out. 
 
 
 % Can use something like this to put references on a page
@@ -826,18 +879,9 @@ The authors would like to thank Demis Hassabis and David Silver for being such i
 % <OR> manually copy in the resultant .bbl file
 % set second argument of \begin to the number of references
 % (used to reserve space for the reference number labels box)
-\begin{thebibliography}{1}
+\bibliographystyle{IEEEtran}
+ \bibliography{survey_paper}
 
-\bibitem{IEEEhowto:kopka}
-H.~Kopka and P.~W. Daly, \emph{A Guide to \LaTeX}, 3rd~ed.\hskip 1em plus
-  0.5em minus 0.4em\relax Harlow, England: Addison-Wesley, 1999.
-
-\bibitem{IEEEhowto:lecun}
-Y. ~LeCun, Y. ~Bengio and G. ~Hinton.
-\emph{Deep learning} 
-Nautre, 521, 436-444, 2015
-
-\end{thebibliography}
 
 
 \end{document}
