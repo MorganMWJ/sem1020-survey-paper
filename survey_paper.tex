@@ -469,7 +469,7 @@ E-mail: mwj7@aber.ac.uk}% <-this % stops an unwanted space
 % in the abstract or keywords.
 \IEEEtitleabstractindextext{%
 \begin{abstract}
-This paper serves as an introduction to Deep Reinforcement learning and a walkthrough of its development using the domain of video games as a benchmark. This survey details the background required for deep reinforcement learning and covers central algorithms in the field. To conclude, it describes some leading-edge research and identifies goals for future direction.
+This paper serves as an introduction to Deep Reinforcement learning and an overview of its development using the domain of Atari 2600 as a benchmark. This survey details the background required for deep reinforcement learning and covers selected central algorithms in the field. To conclude, it describes some leading-edge research and identifies goals for future direction.
 \end{abstract}
 
 % Note that keywords are not normally used for peerreview papers.
@@ -537,7 +537,7 @@ Computer Society, IEEE, IEEEtran, journal, \LaTeX, paper, template.
 \IEEEPARstart{O}{ne} of the main goals of artificial intelligence (AI) is to produce fully autonomous agents that can learn from experience the optimal behaviour for their environments. Reinforcement Learning (RL) provides a framework for such experience-driven learning and the advent of deep learning has enabled RL to tackle problems previously intractable, opening the door to amazing possibilites.   The Deep Q-Learning (DQN) algorithm \cite{Mnih:DQN} was introduced by DeepMind to beat previous state-of-the-art agents at playing Atari 2600. This ignited the field of “Deep Reinforcement Learning”. Since then, growth of the field has been exponential.
 \\
 Deep RL has achieved great success ``a decade ahead of its time'' \cite{WEBSITE:DeepMind} as AlphaGo \cite{silver2016mastering} defeated Lee Sedol the 18-time Go world champion with a 4-1 victory in Seoul, South Korea. It was thought impossible due to the vast game-tree complexity of Go \begin{math}10^{360}\end{math} (chess is \begin{math}10^{123}\end{math} for comparison). 
-The same authors then developed AlphaZero \cite{Silver:AlphaZero} that beat each world-champion computer programs in the games of Chess, Shogi and Go.
+The same authors then developed AlphaZero \cite{Silver:AlphaZero} that beat each world-champion computer program in the games of Chess, Shogi and Go.
 Pluribus achieved superhuman performance at 6-player no-limit Texas Hold’em when competing against elite human players in a series of matches \cite{brown2019superhuman}. Two of the players being past 1st place winners of the poker world series. This represents a massive milestone for AI as the algorithm deals with a partially observable six-agent environment. Many real-world strategic interactions happen in similar environments.
 OpenAI used RL to train a robotic hand to solve a Rubik’s cube then transferring what was learnt in simulation to be done on physical actuators in the real world with amazing results \cite{akkaya2019solving}. 
 AlphaStar \cite{vinyals2019grandmaster} achieved grandmaster level in StarCraft II, reaching top of the league and beating 99.8\% of officially ranked human players.
@@ -687,7 +687,7 @@ We say discounted rewards because each intermediate reward is typically discount
 \\
 Not all Deep RL uses an MDP as a model although most use at least some part of it. This is the difference between model-free and model-based RL algorithms and something that will be detailed later. It is my experience that being able to visualise the problem as an MDP is beneficial to reading the literature.
 \subsubsection{Value \& Policy based Solutions}
-An MDP can be solved by learning an optimal policy \begin{math}\pi^*\end{math}. A policy is a mapping of states to actions \begin{math}\pi : S \rightarrow A\end{math} that tells our agent what action to take at each step along its trajectory. An optimal policy \begin{math}\pi^*\end{math} is a policy that yields the highest expected value from each state and consequently the highest reward from the MDP.
+An MDP can be solved by learning an optimal policy \begin{math}\pi^*\end{math}. A policy is a mapping of states to actions \begin{math}\pi : S \rightarrow A\end{math} that tells our agent what action to take at each step along its trajectory. An optimal policy \begin{math}\pi^*\end{math} is a policy that yields the highest expected value from each state (\ref{optimal_policy}) and consequently the highest reward from the MDP (\ref{state_value_accoridng_to_policy}).
 
 \begin{equation}
 \label{optimal_policy}
@@ -734,11 +734,13 @@ The two most common types of recurrent network are Gated Recurrent Unit (GRU) \c
 
 \section{Taxonomy}
 \subsection{Model-Based \& Model-Free}
+Some agents have access to (or learn) a model of the environment. This allows agents to plan, by thinking time steps ahead, what the result of the environment would be for future actions they could take. Algorithms using an environment model are called model-based, those that do not are called model-free.
 \subsubsection{Model Given \& Model Learned}
+Sometimes a model of the environment is given to the agent in the form of a simulator, sometimes it has to be learnt by the agent from scratch. Often a ground-truth model of the environment is unavailable because the true environment dynamics are unknown.  AlphaZero \cite{Silver:AlphaZero} is a famous example of a model-based agent that learns the model from scratch, because at the beginning of training it does not know any of the game rules.
 \subsection{On-Policy \& Off-Policy}
 Off-policy RL is when the behavioural policy is different from the target policy. On-policy RL is when the behavioural policy is that same as the target policy. The behavioural policy is the policy the agent uses when acting on the environment to generate new experiences. The target policy is the policy that is updated when learning from past experiences.
 \subsection{Value-Based or Policy-Based}
-If the agent is trying to solve the problem by learning an optimal policy function the algorithm is policy-based. If the agent is trying to learn an optimal value function the algorithm is value-based. Actor-critic methods are hybrid algorithms where an agent is trying to learn both the policy and value functions. The actor (policy) acts in the environment and the critic (value) evaluates the actors actions and dictates improvements.
+If the agent is trying to solve the problem by learning an optimal policy function the algorithm is policy-based. If the agent is trying to learn an optimal value function the algorithm is value-based. Actor-critic methods are hybrid algorithms where an agent is trying to learn both the policy and value functions. The actor (policy) acts in the environment and the critic (value) evaluates the actor's actions and dictates improvements.
 
 \section{Key Algorithms}
 \subsection{Deep Q-Learning with Experience Replay}
@@ -770,35 +772,64 @@ y_i = \mathbf{E}_{s'\sim\varepsilon} [r + \gamma \max_{a'} Q(s',a';\theta_{i-1})
 
 The network is trained for 10 million frames with a replay memory of the 1 million most recent frames. During training an $\varepsilon$-greedy policy is used for action selection with greediness being annealed linearly from 1 to 0.1 over the first million frames. $\varepsilon$-greedy selection is a trade-off between exploration and exploitation selecting the highest Q-value action with probability \begin{math}1-\varepsilon\end{math} or an alternative action uniformly at random. In other words, the greater the value of $\varepsilon$ the more exploration and visa-versa.  
 
-\begin{figure}[!h]
-\centering
-\includegraphics[width=2.5in]{dqn_pseudo}
-\caption{Pseudocode for DQN.}
-\label{dqn_pseudo}
-\end{figure}
+%\begin{figure}[!h]
+%\centering
+%\includegraphics[width=2.5in]{dqn_pseudo}
+%\caption{Pseudocode for DQN.}
+%\label{dqn_pseudo}
+%\end{figure}
 
-Q-value increases over training showing deep networks can be stably trained to solve RL problems. The results against previous art and human players show DQN outperforms any traditional RL approach and even human scores on 3 of the 7 games tested.
+Q-value increases over training showing deep networks can be stably trained to solve RL problems (Fig. \ref{dqn_learning}). The results against previous art and human players show DQN outperforms any traditional RL approach and even human scores on 3 of the 7 games tested.
 
 \begin{figure}[!h]
 \centering
 \includegraphics[width=\linewidth]{dqn_learning}
-\caption{State-Action value learning progress of DQN.}
+\caption{State-Action value learning progress of DQN on two Atari 2600 games, Breakout (left) and Seaquest (right).}
 \label{dqn_learning}
 \end{figure}
 
 There have been many improvements and alterations to DQN since its publication. Deep Recurrent Q-Networks \cite{Haus:DRQN}, Double DQN \cite{van2016ddqn}, Prioritized DQN \cite{schaul2015prioritized}, Duelling DQN \cite{wang2015dueling}, Distributional DQN \cite{bellemare2017distributional} and Noisy DQN \cite{fortunato2017noisy} are a few examples.  Publications have successfully combined improvements to DQN. RAINBOW \cite{hessel2018rainbow} is an algorithm that integrates many of the previously mentioned DQN variants into a single hybrid algorithm resulting in better Atari performance. 
 \subsubsection{DQN is value-based, model-free and off-policy}
-This algorithm is a value-based algorithm because it attempts to learn the optimal state-action value function. It does not concern itself with learning the optimal policy, this would be role of a policy-based algorithm. DQN is model-free RL because it only predicts state-action values and does not learn an MDP model of the environment. DQN is off-policy RL because the behavioural policy is simply an $\varepsilon$-greedy selection. Off-policy RL is when the behavioural policy is different from the target policy. On-policy RL is when the behavioural policy is that same as the target policy. 
+This algorithm is a value-based algorithm because it attempts to learn the optimal state-action value function. It does not concern itself with learning the optimal policy, this would be role of a policy-based algorithm. DQN is model-free RL because it only predicts state-action values and does not learn an MDP model of the environment. DQN is off-policy RL because the behavioural policy is simply an $\varepsilon$-greedy selection.
 \subsection{Ayncrhonous Advantage Actor-Critic}
+The Asynchronous Advantage Actor-Critic (A3C) algorithm was introduced in a paper by Mnih et al. \cite{mnih2016async} that presented a general asynchronous framework for training deep RL agents. The framework used parallelism in the form of simultaneous actor-learner agents running on different CPU cores. Each actor-learner explores environment states using different exploration policies and, as they learn, update a global parameter set that is then be propagated to all other actor-learners. The framework reduced the hardware requirements for training Deep RL agents, provided a stabilising role to the learning that was previously done exclusively through experience replay, and enabled a large range of RL algorithms to be used effectively in Deep RL.
+\\
+To test their framework the authors implemented asynchronous variants of four popular RL algorithms. The most successful was A3C an on-policy actor-critic policy gradient method. A3C uses an advantage function (\ref{adv_func}) as a critic computed by calculating feed forward n-step returns (\ref{n_step_returns}). The n-step returns take into account n immediate rewards reutrned from the environment and state evaluations predicted by the network \begin{math}V(s_t;\theta_v)\end{math}. A3C maintains a policy \begin{math}\pi(a_t|s_t;\theta)\end{math} and an estimate of the value function \begin{math}V(s_t;\theta_v)\end{math}. A single CNN approximates both policy and value with a separate output head for each. The agents policy and value function are updated after a set number of actions are taken or a terminal state is reached. The update of the network performs gradient ascent using the \textbf{Policy Gradient Theorem} (\ref{policy_gradient})  [REF]. The authors use RMSProp \cite{hinton2012rmsprop} for optimising updates.
+
+\begin{equation}
+\label{adv_func}
+A(s,a) = Q(s,a) - V(s)
+\end{equation}
+
+\begin{equation}
+\label{n_step_returns}
+A(s,a) \approx (\sum\limits_{i=0}^{k-1}\gamma^ir_{t+i}) + \gamma^kV(s_{t+k};\theta_v) - V(s_t;\theta_v)
+\end{equation}
+
+\begin{equation}
+\label{policy_gradient}
+\nabla_{\theta'} \log  \pi(a_t|s_t;\theta ')A(s_t,a_t;\theta,\theta_v)
+\end{equation}
+
+A3C beat previous art at playing Atari 2600, including DQN. A3C outperformed all agents in half the training time while being trained using 16 CPU cores, other agents were trained using an Nvidia K40 GPU.
+
+\begin{figure}[!h]
+\centering
+\includegraphics[width=\linewidth]{a3c_atari_comparison}
+\caption{Performance of A3C against previous Atari agents. Table shows Mean and Median human-normalised scores on 57 Atari games. Two architectures are compared for A3C, a feed forward network (FF) and long-short term memory network (LSTM).}
+\label{dqn_learning}
+\end{figure}
+
 
 \section{State-of-the-art Work}
-AlphaZero, MuZer ..etc.
+\subsection{MuZero}
 
 \section{Future Directions}
 Goals for the future...
 \subsection{Interpretability \& Explainable AI}
 Model Extraction.
 Model Visualisation.
+\subsection{Real World Domains}
 
 \section{Conclusion}
 We need a conclusion.
@@ -846,7 +877,7 @@ Appendix two text goes here.
 \fi
 
 
-The authors would like to thank David Silver for his fantastic, freely available, lecture series [REF] on Deep RL and OpenAI for their "Spinning Up in Deep RL" guide [REF] that presents a great introduction to the field and collation of key papers for researchers just starting out. 
+The author would like to thank David Silver for his fantastic, freely available, lecture series [REF] on Deep RL and OpenAI for their "Spinning Up in Deep RL" guide [REF] that presents a great introduction to the field and collation of key papers for researchers just starting out. 
 
 
 % Can use something like this to put references on a page
